@@ -8,106 +8,181 @@ const PhoneIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
 )
 
-/* Ayurvedic Mandala / Lotus decorative illustration — no human figures */
-const AyurvedicIllustration = () => (
-  <svg viewBox="0 0 400 450" fill="none" xmlns="http://www.w3.org/2000/svg" className="hero-illustration">
+/* 3D‑style Mother & Baby SVG illustration — no sindoor */
+const MotherBabyIllustration = () => (
+  <svg viewBox="0 0 420 500" fill="none" xmlns="http://www.w3.org/2000/svg" className="hero-illustration">
     <defs>
-      <radialGradient id="glowGrad" cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0%" stopColor="rgba(201,168,76,0.18)"/>
+      <radialGradient id="bgGlow" cx="0.5" cy="0.45" r="0.55">
+        <stop offset="0%" stopColor="rgba(201,168,76,0.20)"/>
         <stop offset="100%" stopColor="transparent"/>
       </radialGradient>
-      <radialGradient id="innerGlow" cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0%" stopColor="rgba(76,175,80,0.12)"/>
+      <radialGradient id="skinGrad" cx="0.45" cy="0.35" r="0.55">
+        <stop offset="0%" stopColor="#f5d0a9"/>
+        <stop offset="80%" stopColor="#d4a574"/>
+        <stop offset="100%" stopColor="#c49660"/>
+      </radialGradient>
+      <radialGradient id="babySkin" cx="0.45" cy="0.4" r="0.5">
+        <stop offset="0%" stopColor="#fbe0c4"/>
+        <stop offset="100%" stopColor="#e8b88a"/>
+      </radialGradient>
+      <linearGradient id="sareeGrad" x1="0" y1="0" x2="0.3" y2="1">
+        <stop offset="0%" stopColor="#2e7d32"/>
+        <stop offset="50%" stopColor="#1b5e20"/>
+        <stop offset="100%" stopColor="#0f3d14"/>
+      </linearGradient>
+      <linearGradient id="sareeAccent" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#c9a84c"/>
+        <stop offset="100%" stopColor="#d4b96a"/>
+      </linearGradient>
+      <linearGradient id="hairGrad" x1="0.3" y1="0" x2="0.7" y2="1">
+        <stop offset="0%" stopColor="#1a1a2e"/>
+        <stop offset="100%" stopColor="#0d0d1a"/>
+      </linearGradient>
+      <radialGradient id="haloGrad" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stopColor="rgba(201,168,76,0.35)"/>
+        <stop offset="60%" stopColor="rgba(201,168,76,0.1)"/>
         <stop offset="100%" stopColor="transparent"/>
       </radialGradient>
-      <radialGradient id="lotusCore" cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0%" stopColor="#fff8e7"/>
-        <stop offset="100%" stopColor="rgba(201,168,76,0.4)"/>
-      </radialGradient>
+      <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+        <feOffset dx="4" dy="8" result="offsetBlur"/>
+        <feFlood floodColor="rgba(0,0,0,0.25)" result="color"/>
+        <feComposite in="color" in2="offsetBlur" operator="in" result="shadow"/>
+        <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow3d" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
     </defs>
 
-    {/* Ambient glow orbs */}
-    <circle cx="200" cy="225" r="180" fill="url(#glowGrad)" className="hero-glow-circle"/>
-    <circle cx="200" cy="225" r="120" fill="url(#innerGlow)" className="hero-glow-inner"/>
+    {/* Background halo */}
+    <circle cx="210" cy="230" r="200" fill="url(#haloGrad)" className="hero-glow-circle"/>
+    <circle cx="210" cy="230" r="140" fill="url(#bgGlow)" className="hero-glow-inner"/>
 
-    {/* Outer mandala ring */}
-    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle, i) => (
-      <ellipse
-        key={i}
-        cx={200 + 140 * Math.cos((angle * Math.PI) / 180)}
-        cy={225 + 140 * Math.sin((angle * Math.PI) / 180)}
-        rx="10" ry="4"
-        fill="rgba(201,168,76,0.25)"
-        transform={`rotate(${angle}, ${200 + 140 * Math.cos((angle * Math.PI) / 180)}, ${225 + 140 * Math.sin((angle * Math.PI) / 180)})`}
-        className="sparkle-1"
-      />
-    ))}
-
-    {/* Lotus petals — outer ring */}
-    {[0,45,90,135,180,225,270,315].map((angle, i) => {
-      const rad = (angle * Math.PI) / 180
-      const px = 200 + 80 * Math.cos(rad)
-      const py = 225 + 80 * Math.sin(rad)
-      return (
-        <ellipse
-          key={i}
-          cx={px} cy={py}
-          rx="28" ry="12"
-          fill={i % 2 === 0 ? 'rgba(201,168,76,0.45)' : 'rgba(76,175,80,0.4)'}
-          transform={`rotate(${angle}, ${px}, ${py})`}
-          className="lotus-bloom"
-        />
-      )
-    })}
-
-    {/* Lotus petals — inner ring */}
-    {[22,67,112,157,202,247,292,337].map((angle, i) => {
-      const rad = (angle * Math.PI) / 180
-      const px = 200 + 50 * Math.cos(rad)
-      const py = 225 + 50 * Math.sin(rad)
-      return (
-        <ellipse
-          key={i}
-          cx={px} cy={py}
-          rx="20" ry="9"
-          fill={i % 2 === 0 ? 'rgba(201,168,76,0.6)' : 'rgba(76,175,80,0.55)'}
-          transform={`rotate(${angle}, ${px}, ${py})`}
-          className="lotus-bloom"
-        />
-      )
-    })}
-
-    {/* Lotus core */}
-    <circle cx="200" cy="225" r="28" fill="url(#lotusCore)" className="hero-glow-inner"/>
-    <circle cx="200" cy="225" r="16" fill="rgba(201,168,76,0.7)"/>
-    <circle cx="200" cy="225" r="8" fill="#c9a84c"/>
-
-    {/* Decorative leaf sprays */}
-    <path d="M60 100C40 80 30 50 55 30C80 10 95 40 75 65Z" fill="rgba(76,175,80,0.3)" className="leaf-sway-1"/>
-    <path d="M340 100C360 80 370 50 345 30C320 10 305 40 325 65Z" fill="rgba(76,175,80,0.25)" className="leaf-sway-2"/>
-    <path d="M55 360C35 340 28 310 50 288C72 266 88 290 70 318Z" fill="rgba(76,175,80,0.2)" className="leaf-sway-3"/>
-    <path d="M345 360C365 340 372 310 350 288C328 266 312 290 330 318Z" fill="rgba(76,175,80,0.2)" className="leaf-sway-1"/>
-    <path d="M80 60C65 50 58 30 72 18C86 6 96 22 85 40Z" fill="rgba(201,168,76,0.18)" className="leaf-sway-2"/>
-    <path d="M320 60C335 50 342 30 328 18C314 6 304 22 315 40Z" fill="rgba(201,168,76,0.15)" className="leaf-sway-3"/>
-
-    {/* Floating sparkle dots */}
-    <circle cx="80" cy="120" r="3" fill="#c9a84c" className="sparkle-1"/>
-    <circle cx="320" cy="100" r="2.5" fill="#c9a84c" className="sparkle-2"/>
-    <circle cx="60" cy="300" r="2" fill="#4caf50" className="sparkle-3"/>
-    <circle cx="340" cy="320" r="2.5" fill="#c9a84c" className="sparkle-4"/>
-    <circle cx="110" cy="60" r="2" fill="#4caf50" className="sparkle-5"/>
-    <circle cx="290" cy="400" r="2.5" fill="#c9a84c" className="sparkle-6"/>
-    <circle cx="160" cy="50" r="1.5" fill="#c9a84c" className="sparkle-1"/>
-    <circle cx="240" cy="410" r="2" fill="#4caf50" className="sparkle-3"/>
+    {/* Decorative sparkles */}
+    <circle cx="70" cy="80" r="3" fill="#c9a84c" className="sparkle-1"/>
+    <circle cx="350" cy="110" r="2.5" fill="#c9a84c" className="sparkle-2"/>
+    <circle cx="50" cy="320" r="2" fill="#4caf50" className="sparkle-3"/>
+    <circle cx="370" cy="350" r="2.5" fill="#c9a84c" className="sparkle-4"/>
+    <circle cx="100" cy="50" r="2" fill="#4caf50" className="sparkle-5"/>
+    <circle cx="330" cy="60" r="1.5" fill="#c9a84c" className="sparkle-6"/>
 
     {/* Star accents */}
-    <path d="M310 155L312 161L318 161L313 165L315 171L310 167L305 171L307 165L302 161L308 161Z" fill="#c9a84c" opacity="0.7" className="sparkle-2"/>
-    <path d="M90 195L92 201L98 201L93 205L95 211L90 207L85 211L87 205L82 201L88 201Z" fill="#c9a84c" opacity="0.6" className="sparkle-4"/>
-    <path d="M200 40L202 46L208 46L203 50L205 56L200 52L195 56L197 50L192 46L198 46Z" fill="#c9a84c" opacity="0.5" className="sparkle-1"/>
+    <path d="M340 140L342 146L348 146L343 150L345 156L340 152L335 156L337 150L332 146L338 146Z" fill="#c9a84c" opacity="0.7" className="sparkle-2"/>
+    <path d="M75 180L77 186L83 186L78 190L80 196L75 192L70 196L72 190L67 186L73 186Z" fill="#c9a84c" opacity="0.6" className="sparkle-4"/>
 
-    {/* Bottom water ripple lines */}
-    <ellipse cx="200" cy="420" rx="100" ry="8" fill="rgba(76,175,80,0.12)" className="hero-glow-inner"/>
-    <ellipse cx="200" cy="430" rx="70" ry="5" fill="rgba(76,175,80,0.08)" className="hero-glow-inner"/>
+    {/* Leaf decorations */}
+    <path d="M50 120C35 100 30 70 52 50C74 30 85 60 68 88Z" fill="rgba(76,175,80,0.25)" className="leaf-sway-1"/>
+    <path d="M370 130C385 110 390 80 368 60C346 40 335 70 352 98Z" fill="rgba(76,175,80,0.20)" className="leaf-sway-2"/>
+    <path d="M45 390C25 370 20 340 42 318C64 296 78 325 58 355Z" fill="rgba(76,175,80,0.18)" className="leaf-sway-3"/>
+    <path d="M375 400C395 380 398 350 376 328C354 306 340 335 362 365Z" fill="rgba(76,175,80,0.15)" className="leaf-sway-1"/>
+
+    {/* Main figure group with 3D shadow */}
+    <g filter="url(#softShadow)" className="mother-group">
+      {/* Saree / Body — flowing drape */}
+      <path d="M150 220 C145 260, 120 320, 110 400 C108 420, 112 450, 130 470 L290 470 C308 450, 312 420, 310 400 C300 320, 275 260, 270 220 Z" fill="url(#sareeGrad)"/>
+      {/* Saree golden border — bottom */}
+      <path d="M130 468 C150 458, 250 458, 290 468 L290 475 C250 466, 170 466, 130 475 Z" fill="url(#sareeAccent)" opacity="0.9"/>
+      {/* Saree golden border — diagonal pallu */}
+      <path d="M155 220 C148 250, 135 290, 128 340 L135 342 C142 292, 155 252, 162 222 Z" fill="url(#sareeAccent)" opacity="0.7"/>
+      {/* Additional saree drape fold */}
+      <path d="M245 230 C260 280, 270 340, 278 400 L285 398 C277 338, 267 278, 252 228 Z" fill="rgba(255,255,255,0.08)"/>
+
+      {/* Neck */}
+      <ellipse cx="210" cy="170" rx="22" ry="30" fill="url(#skinGrad)"/>
+
+      {/* Necklace — traditional Kerala style */}
+      <path d="M188 185 Q195 200, 210 205 Q225 200, 232 185" fill="none" stroke="#c9a84c" strokeWidth="2.5"/>
+      <circle cx="210" cy="206" r="4" fill="#c9a84c"/>
+      <circle cx="198" cy="198" r="2.5" fill="#c9a84c" opacity="0.8"/>
+      <circle cx="222" cy="198" r="2.5" fill="#c9a84c" opacity="0.8"/>
+
+      {/* Mother's face — oval 3D form */}
+      <ellipse cx="210" cy="130" rx="42" ry="52" fill="url(#skinGrad)"/>
+      {/* Nose highlight */}
+      <path d="M210 135 Q213 142, 210 148 Q207 142, 210 135Z" fill="rgba(255,255,255,0.15)"/>
+      {/* Gentle smile */}
+      <path d="M198 152 Q210 162, 222 152" fill="none" stroke="#a0705a" strokeWidth="1.8" strokeLinecap="round"/>
+      {/* Eyes — closed peacefully */}
+      <path d="M190 125 Q196 120, 202 125" fill="none" stroke="#2c1810" strokeWidth="2" strokeLinecap="round" className="eye-blink"/>
+      <path d="M218 125 Q224 120, 230 125" fill="none" stroke="#2c1810" strokeWidth="2" strokeLinecap="round" className="eye-blink"/>
+      {/* Eyelashes */}
+      <path d="M189 124 L187 121" stroke="#2c1810" strokeWidth="1" strokeLinecap="round"/>
+      <path d="M231 124 L233 121" stroke="#2c1810" strokeWidth="1" strokeLinecap="round"/>
+      {/* Eyebrows */}
+      <path d="M187 116 Q195 110, 204 114" fill="none" stroke="#1a1a2e" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M216 114 Q225 110, 233 116" fill="none" stroke="#1a1a2e" strokeWidth="1.5" strokeLinecap="round"/>
+      {/* Bindi — small decorative gold dot (NOT sindoor) */}
+      <circle cx="210" cy="108" r="2.5" fill="#c9a84c"/>
+
+      {/* Hair — voluminous 3D style */}
+      <path d="M168 120 C165 90, 175 60, 210 55 C245 60, 255 90, 252 120 C255 100, 250 75, 210 68 C170 75, 165 100, 168 120Z" fill="url(#hairGrad)"/>
+      {/* Hair bun */}
+      <circle cx="210" cy="58" r="22" fill="url(#hairGrad)"/>
+      {/* Hair decoration — flowers */}
+      <circle cx="235" cy="68" r="6" fill="#fff" opacity="0.9"/>
+      <circle cx="235" cy="68" r="3" fill="#c9a84c" opacity="0.8"/>
+      <circle cx="245" cy="78" r="5" fill="#fff" opacity="0.7"/>
+      <circle cx="245" cy="78" r="2.5" fill="#c9a84c" opacity="0.6"/>
+      <circle cx="225" cy="60" r="5" fill="#fff" opacity="0.8"/>
+      <circle cx="225" cy="60" r="2.5" fill="#c9a84c" opacity="0.7"/>
+      {/* Hair side strands */}
+      <path d="M168 120 C163 135, 162 150, 165 165" fill="none" stroke="#1a1a2e" strokeWidth="5" strokeLinecap="round"/>
+      <path d="M252 120 C257 135, 258 150, 255 165" fill="none" stroke="#1a1a2e" strokeWidth="5" strokeLinecap="round"/>
+
+      {/* Earrings */}
+      <ellipse cx="168" cy="140" rx="5" ry="8" fill="#c9a84c" className="earring-swing"/>
+      <ellipse cx="252" cy="140" rx="5" ry="8" fill="#c9a84c" className="earring-swing"/>
+
+      {/* Mother's arms — cradling */}
+      {/* Left arm */}
+      <path d="M155 225 C140 260, 145 300, 170 320 Q185 330, 195 310" fill="url(#skinGrad)" stroke="#c49660" strokeWidth="0.5"/>
+      {/* Right arm */}
+      <path d="M265 225 C275 260, 270 300, 250 320 Q235 330, 225 310" fill="url(#skinGrad)" stroke="#c49660" strokeWidth="0.5"/>
+
+      {/* Baby — cradled in arms */}
+      <g className="baby-breathe">
+        {/* Baby blanket */}
+        <ellipse cx="210" cy="310" rx="50" ry="30" fill="rgba(255,255,255,0.15)"/>
+        <path d="M165 295 C175 280, 200 275, 210 278 C220 275, 245 280, 255 295 C250 320, 230 335, 210 338 C190 335, 170 320, 165 295Z" fill="#fff8e7" opacity="0.9"/>
+        {/* Baby body */}
+        <ellipse cx="210" cy="308" rx="28" ry="22" fill="url(#babySkin)"/>
+        {/* Baby face */}
+        <circle cx="210" cy="290" r="16" fill="url(#babySkin)"/>
+        {/* Baby eyes — sleeping */}
+        <path d="M202 288 Q206 285, 210 288" fill="none" stroke="#5a3a28" strokeWidth="1.2" strokeLinecap="round"/>
+        <path d="M214 288 Q218 285, 222 288" fill="none" stroke="#5a3a28" strokeWidth="1.2" strokeLinecap="round"/>
+        {/* Baby smile */}
+        <path d="M207 295 Q210 298, 213 295" fill="none" stroke="#c49660" strokeWidth="1" strokeLinecap="round"/>
+        {/* Baby tiny nose */}
+        <circle cx="210" cy="292" r="1" fill="#d4a574"/>
+        {/* Baby hair tuft */}
+        <path d="M200 278 Q205 270, 210 275 Q215 268, 220 278" fill="#2c1810" opacity="0.6"/>
+      </g>
+    </g>
+
+    {/* Lotus base — mother sitting/standing on stylised lotus */}
+    {[0,40,80,120,160,200,240,280,320].map((angle, i) => {
+      const rad = (angle * Math.PI) / 180
+      const px = 210 + 80 * Math.cos(rad)
+      const py = 460 + 18 * Math.sin(rad)
+      return (
+        <ellipse
+          key={i}
+          cx={px} cy={py}
+          rx="24" ry="10"
+          fill={i % 2 === 0 ? 'rgba(201,168,76,0.35)' : 'rgba(76,175,80,0.30)'}
+          transform={`rotate(${angle}, ${px}, ${py})`}
+          className="lotus-bloom"
+        />
+      )
+    })}
+    <ellipse cx="210" cy="460" rx="18" ry="8" fill="rgba(201,168,76,0.5)"/>
+
+    {/* Bottom glow / reflection */}
+    <ellipse cx="210" cy="480" rx="100" ry="10" fill="rgba(76,175,80,0.10)" className="hero-glow-inner"/>
+    <ellipse cx="210" cy="490" rx="70" ry="6" fill="rgba(76,175,80,0.06)" className="hero-glow-inner"/>
   </svg>
 )
 
@@ -212,7 +287,7 @@ export default function Hero() {
           </div>
 
           <div className="hero-illustration-wrap">
-            <AyurvedicIllustration />
+            <MotherBabyIllustration />
           </div>
         </div>
 
